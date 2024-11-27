@@ -14,4 +14,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Utility\Utility.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="test\" />
+	</ItemGroup>
 </Project>
