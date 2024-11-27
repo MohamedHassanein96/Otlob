@@ -27,6 +27,10 @@
 	<ItemGroup>
 	  <Folder Include="Areas\Identities\Controllers\" />
 	  <Folder Include="Areas\Identities\Views\" />
+	  <Folder Include="Areas\Meal\Controllers\" />
+	  <Folder Include="Areas\Meal\Data\" />
+	  <Folder Include="Areas\Meal\Models\" />
+	  <Folder Include="Areas\Meal\Views\" />
 	  <Folder Include="Areas\ResturantAdmin\Controllers\" />
 	  <Folder Include="Areas\ResturantAdmin\Views\" />
 	  <Folder Include="Areas\SuperAdmin\Controllers\" />
