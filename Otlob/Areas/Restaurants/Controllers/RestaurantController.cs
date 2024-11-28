@@ -15,7 +15,7 @@ namespace Otlob.Areas.Restaurants.Controllers
         {
             _unitOfWorkRepository = unitOfWorkRepository;
         }
-        public IActionResult Indexx()
+        public IActionResult Index()
         {
             return View();
         }

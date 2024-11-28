@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Otlob.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Otlob.Core.ViewModel
         public string ConfirmPassword { get; set; }
 
         [Required, MaxLength(100)]
-        public string Address { get; set; }
+        public Address Address { get; set; }
 
         [Required, Display(Name = "Phone")]
         [MaxLength(11)]

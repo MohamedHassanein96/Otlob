@@ -13,5 +13,6 @@ namespace Otlob.Core.Models
         public int Points { get; set; }
         public DateTime ExpireDate { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; }
     }
 }

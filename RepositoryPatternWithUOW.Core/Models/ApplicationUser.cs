@@ -16,10 +16,9 @@ namespace Otlob.Core.Models
 
         [MaxLength(15)]
         public string? LastName { get; set; }
+
         [Required, MaxLength(150)]
-        public string Address { get; set; }
-        [Required]
-        public int Resturant_Id { get; set; }
+        public Address Address { get; set; }
         public byte[]? ProfilePicture { get; set; }
         public Gender? Gender { get; set; }
         public DateOnly? BirthDate { get; set; }
