@@ -9,8 +9,7 @@ namespace Otlob.EF.IBaseRepository
 {
     public interface IBaseRepository<T> where T : class
     {
-        public interface IBaseRepository<T> where T : class
-        {
+        
             public IEnumerable<T> Get(
             Expression<Func<T, bool>>? expression = null,
             Func<IQueryable<T>, IQueryable<T>>? includes = null,
@@ -24,6 +23,6 @@ namespace Otlob.EF.IBaseRepository
 
             void Delete(T entity);
 
-        }
+        
     }
 }

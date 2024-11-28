@@ -50,6 +50,12 @@ namespace Otlob
             app.UseAuthorization();
 
             app.MapControllerRoute(
+               name: "area",
+               pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{area=customer}/{controller=Home}/{action=Index}/{id?}");
 

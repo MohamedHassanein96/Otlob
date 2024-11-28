@@ -18,7 +18,7 @@ namespace RepositoryPatternWithUOW.Core.Models
         public decimal Rate { get; set; }
         public string Logo { get; set; }
         public decimal DeliveryFee { get; set; }
-        public DateTime DeliveryTime { get; set; }
+        public decimal DeliveryDuration { get; set; }
         public ICollection<Meal> Meals { get; set; }
         public ICollection<Delivery> Deliveries { get; set; }
 

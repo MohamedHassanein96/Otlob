@@ -17,13 +17,9 @@ namespace Otlob.EF.UnitOfWorkRepository
     public class UnitOfWorkRepository : IUnitOfWorkRepository
     {
         public IBaseRepository<ContactUs> ContactUs { get; private set; }
-
         public IBaseRepository<CustomerConcern> CustomerConcerns { get; private set; }
-
         public IBaseRepository<Delivery> Deliveries { get; private set; }
-
         public IBaseRepository<Meal> Meals { get; private set; }
-
         public IBaseRepository<Order> Orders { get; private set; }
         public IBaseRepository<Restaurant> Restaurants { get; private set; }
         public IBaseRepository<Point> Points { get; private set; }
@@ -31,7 +27,6 @@ namespace Otlob.EF.UnitOfWorkRepository
         {
             _applicationDbContext.Dispose();
         }
-
         public void SaveChanges()
         {
             _applicationDbContext.SaveChanges();
