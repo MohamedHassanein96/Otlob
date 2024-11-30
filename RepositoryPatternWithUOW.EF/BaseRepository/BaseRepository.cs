@@ -10,45 +10,47 @@ using System.Threading.Tasks;
 
 namespace Otlob.EF.BaseRepository
 {
-    public class BaseRepository <T> : IBaseRepository<T> where T : class
+    public class BaseRepository<T>(ApplicationDbContext context) : IBaseRepository<T> where T : class
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context = context;
+        private DbSet<T> dbSet = context.Set<T>();
 
-        public BaseRepository(ApplicationDbContext context)
-        {
-            _context = context;
-        }
         public void Create(T entity)
         {
-            _context.Set<T>().Add(entity);
+            dbSet.Add(entity);
         }
 
         public void Delete(T entity)
         {
-            _context.Set<T>().Remove(entity);
+            dbSet.Remove(entity);
         }
 
         public void Edit(T entity)
         {
-            _context.Set<T>().Update(entity);
+            dbSet.Update(entity);
         }
-        public IEnumerable<T> Get(Expression<Func<T, bool>>? expression = null, Func<IQueryable<T>, IQueryable<T>>? includes = null, bool tracked = true)
+        public IEnumerable<T>? Get(Expression<Func<T, object>>[]? includeProps = null, Expression<Func<T, bool>>? expression = null, bool tracked = true)
         {
-            IQueryable<T> query = _context.Set<T>();
+            IQueryable<T> query = dbSet;
 
-            if (includes != null)
-            {
-                query = includes(query);
-            }
             if (expression != null)
-            {
                 query = query.Where(expression);
-            }
-            if (!tracked)
+            if (includeProps != null)
             {
-                query = query.AsNoTracking();
+                foreach (var prop in includeProps)
+                {
+                    query = query.Include(prop);
+                }
             }
+
+            if (!tracked)
+                query = query.AsNoTracking();
+
             return query.ToList();
+        }
+        public T? GetOne(Expression<Func<T, object>>[]? includeProps = null, Expression<Func<T, bool>>? expression = null, bool tracked = true)
+        {
+            return Get(includeProps, expression, tracked).FirstOrDefault();
         }
     }
 }

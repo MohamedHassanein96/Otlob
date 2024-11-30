@@ -12,13 +12,16 @@ namespace Otlob.Core.Models
     public class ApplicationUser : IdentityUser
     {
         [MaxLength(15)]
-        public string? FirstName { get; set; }     
+        public string? FirstName { get; set; }
 
         [MaxLength(15)]
         public string? LastName { get; set; }
 
         [Required, MaxLength(150)]
         public Address Address { get; set; }
+
+        [Required]
+        public int Resturant_Id { get; set; }
         public byte[]? ProfilePicture { get; set; }
         public Gender? Gender { get; set; }
         public DateOnly? BirthDate { get; set; }

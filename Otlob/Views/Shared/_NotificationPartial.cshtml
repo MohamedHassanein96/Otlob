@@ -2,3 +2,7 @@
 {
     <script>toastr.success('@TempData["Success"]')</script>
 }
+@if (TempData["Error"] != null)
+{
+    <script>toastr.error('@TempData["Error"]')</script>
+}

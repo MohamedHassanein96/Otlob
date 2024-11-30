@@ -25,6 +25,7 @@ namespace RepositoryPatternWithUOW.EF
         public DbSet<Order> Orders { get; set; } 
         public DbSet<Point> Points { get; set; } 
         public DbSet<Restaurant> Restaurants { get; set; } 
+        public DbSet<Address> Addresses { get; set; } // Add new Addres Model
         //public DbSet<RestaurantVM> Restaurantsvm { get; set; } 
     }
 }

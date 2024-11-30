@@ -1,15 +1,11 @@
 ﻿@model Otlob.Core.ViewModel.ApplicationUserlVM
 
-@{
-    ViewData["Title"] = "Register";
-}
-
 @section Register {
     <partial name="_RegisterPagePartial"></partial>
 }
 
-<form asp-action="Register" class="loginform">
-    <h2>Create an account</h2>
+<form asp-action="RegistSuperAdmin" class="loginform">
+    <h2>Create an super admin account</h2>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div>
         <input asp-for="UserName" placeholder="UserName" />
@@ -30,12 +26,10 @@
         <input asp-for="PhoneNumber" placeholder="PhoneNumber" />
     </div>
     <div>
-        <button type="submit">Create your account</button>
+        <button type="submit">Create super admin account</button>
     </div>
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -9,20 +9,20 @@ namespace Otlob.EF.IBaseRepository
 {
     public interface IBaseRepository<T> where T : class
     {
-        
-            public IEnumerable<T> Get(
-            Expression<Func<T, bool>>? expression = null,
-            Func<IQueryable<T>, IQueryable<T>>? includes = null,
-            bool tracked = true
-            );
 
+        //public IEnumerable<T> Get(
+        //Expression<Func<T, bool>>? expression = null,
+        //Func<IQueryable<T>, IQueryable<T>>? includes = null,
+        //bool tracked = true
+        //);
+        IEnumerable<T>? Get(Expression<Func<T, object>>[]? includeProps = null, Expression<Func<T, bool>>? expression = null, bool tracked = true);
 
-            void Create(T entity);
+        T? GetOne(Expression<Func<T, object>>[]? includeProps = null, Expression<Func<T, bool>>? expression = null, bool tracked = true);
 
-            void Edit(T entity);
+        void Create(T entity);
 
-            void Delete(T entity);
+        void Edit(T entity);
 
-        
+        void Delete(T entity);        
     }
 }

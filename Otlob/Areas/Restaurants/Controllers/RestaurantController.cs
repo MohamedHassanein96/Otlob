@@ -23,6 +23,7 @@ namespace Otlob.Areas.Restaurants.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(RestaurantVM restaurantVM)
@@ -36,17 +37,18 @@ namespace Otlob.Areas.Restaurants.Controllers
                     Email = restaurantVM.Email,
                     Phone = restaurantVM.Phone,
                     Address = restaurantVM.Address,
-                    Descriptions = restaurantVM.Descriptions,
+                    Description = restaurantVM.Descriptions,
                     DeliveryFee = restaurantVM.DeliveryFee,
                     DeliveryDuration = restaurantVM.DeliveryDuration
                 };
+
                 if (restaurantVM.Logo != null)
                 {
                     var LogoFileName = Methods.UploadImg(restaurantVM.Logo);
                     restaurant.Logo = LogoFileName;
                     _unitOfWorkRepository.Restaurants.Create(restaurant);
                     _unitOfWorkRepository.SaveChanges();
-                    return View("Indexx");
+                    return View("Index");
                 }
                 else
                 {

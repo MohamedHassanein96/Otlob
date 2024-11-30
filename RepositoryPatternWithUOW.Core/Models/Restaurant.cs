@@ -1,4 +1,5 @@
-﻿using Otlob.Core.Models;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Otlob.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,16 @@ namespace RepositoryPatternWithUOW.Core.Models
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public string Descriptions { get; set; }
+        public string Description { get; set; }
         public decimal Rate { get; set; }
-        public string Logo { get; set; }
+       public string? Logo { get; set; }
         public decimal DeliveryFee { get; set; }
         public decimal DeliveryDuration { get; set; }
+
+        [ValidateNever]
         public ICollection<Meal> Meals { get; set; }
+
+        [ValidateNever]
         public ICollection<Delivery> Deliveries { get; set; }
-
-
-
-
-
     }
 }

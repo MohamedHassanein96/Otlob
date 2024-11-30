@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Otlob.Core.Models;
 using Otlob.Core.ViewModel;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Utility;
 
 namespace Otlob.Areas.Customer.Controllers
@@ -23,6 +25,7 @@ namespace Otlob.Areas.Customer.Controllers
             this.signInManager = signInManager;
             this.roleManager = roleManager;
         }
+
         public async Task<IActionResult> Register()
         {
             if (roleManager.Roles.IsNullOrEmpty())
@@ -48,7 +51,7 @@ namespace Otlob.Areas.Customer.Controllers
                 };
 
                 var result = await userManager.CreateAsync(applicatioUser, userVM.Password);
-                
+
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(applicatioUser, SD.customer);
@@ -75,28 +78,41 @@ namespace Otlob.Areas.Customer.Controllers
         {
             if (ModelState.IsValid)
             {
-                    var userDb = await userManager.FindByEmailAsync(loginVM.UserName);
-                    if (userDb != null)
-                    {
-                        var finalResult = await userManager.CheckPasswordAsync(userDb, loginVM.Password);
+                var userDb = await userManager.FindByEmailAsync(loginVM.UserName);
+                if (userDb != null)
+                {
+                    var finalResult = await userManager.CheckPasswordAsync(userDb, loginVM.Password);
 
-                        if (finalResult)
+                    if (finalResult)
+                    {
+                        await signInManager.SignInAsync(userDb, loginVM.RememberMe);
+
+                        if (await userManager.IsInRoleAsync(userDb, SD.superAdminRole))
                         {
-                            await signInManager.SignInAsync(userDb, loginVM.RememberMe);
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home", new { area = "SuperAdmin" });
                         }
-                        else
-                            ModelState.AddModelError("", "There is invalid user name or password");
+                        else if (await userManager.IsInRoleAsync(userDb, SD.resturanrAdmin))
+                        {
+                            return RedirectToAction("Index", "Home", new { area = "ResturantAdmin" });
+                        }
+                        else if (await userManager.IsInRoleAsync(userDb, SD.customer))
+                        {
+                            return RedirectToAction("Index", "Home", new { area = "Customer" });
+                        }
                     }
                     else
                         ModelState.AddModelError("", "There is invalid user name or password");
+                }
+                else
+                    ModelState.AddModelError("", "There is invalid user name or password");
             }
 
             return View(loginVM);
         }
+
         public async Task<IActionResult> Profile()
         {
-            var user = await userManager.GetUserAsync(User);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
 
             if (user != null)
             {
@@ -139,7 +155,7 @@ namespace Otlob.Areas.Customer.Controllers
                             return RedirectToAction("Profile");
                         }
                     }
-                    
+
                     if (Request.Form.Files.Count > 0)
                     {
                         var file = Request.Form.Files.FirstOrDefault();
@@ -182,7 +198,7 @@ namespace Otlob.Areas.Customer.Controllers
                             }
                         }
                     }
-                }                
+                }
             }
 
             return View(profileVM);
